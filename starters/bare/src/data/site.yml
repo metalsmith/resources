@@ -1,0 +1,17 @@
+---
+title: Metalsmith bare starter
+lang: en-US
+generator: Metalsmith
+generatorurl: https://metalsmith.io
+nav:
+  - label: Home
+    uri: ''
+  - label: Blank
+    uri: blank/
+  - label: About
+    uri: about/
+htmlMeta:
+  author: John Doe
+  description: A bare metalsmith starter showing basics of repo setup, build configuration and usage of a few essential plugins
+---
+

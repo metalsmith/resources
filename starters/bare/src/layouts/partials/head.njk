@@ -1,0 +1,14 @@
+<meta charset="utf-8">
+<title>{% if title %}{{ title }} | {% endif %}{{ site.title }}</title>
+{% if noindex -%}<meta name="robots" content="noindex">{%- endif %}
+<link rel="icon" href="{{ baseuri }}/favicon.ico" sizes="any">
+<link rel="icon" href="{{ baseuri }}/assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="{{ baseuri }}/assets/img/favicon.png">
+{%- for name, content in site.htmlMeta %}
+{%- if not name == 'description' -%} {# we handle this one separately #}
+<meta name="{{ name }}" content="{{ content }}">
+{%- endif -%}
+{%- endfor %}
+<link rel="canonical" href="{{ baseuri }}/{% if permalink %}{{ permalink }}{% endif %}">
+<meta name="description" content="{% if excerpt %}{{ excerpt }}{% else %}{{ site.htmlMeta.description }}{% endif %}">
+<meta name="generator" content="metalsmith"/>

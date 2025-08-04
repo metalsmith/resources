@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="{{ lang }}">
+  <head>
+    {% include "partials/head.njk" %}
+    {%- set fullUrl = r/^(https*:)*\/\// -%}
+    {# define page-specific "styles: ['style.css', 'other.css']" in file front matter
+     # or falls back to metalsmith.metadata().styles if available #}
+    {% if styles -%}
+    {% for style in styles -%}
+    {%- if fullUrl.test(style) -%}
+      <link rel="stylesheet" href="{{ style }}">
+    {%- else -%}
+      <link rel="stylesheet" href="{{ baseuri }}/assets/css/{{ style }}?{{ build.pkgVersion }}">
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif %}
+  </head>
+  {# scope page-specific CSS styles, e.g. to #page-home by setting id: home in file front matter #}
+  <body {% if id %}id="page-{{ id }}"{% endif %}>
+    <header>
+      <div class="container">
+      {% include "partials/header.njk" %}
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        {% if title %}<h1 class="title">{{ title }}</h1>{% endif %}
+        <div class="contents">
+        {# a block that is overridable by extending layouts. By default renders file.contents #}
+        {% block contents %}
+          {% if excerpt %}<p class="excerpt">{{ excerpt | safe }}</p>{% endif %}
+          {{ contents | safe }}
+        {% endblock %}
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        {% include "partials/footer.njk" %}
+      </div>
+      {% if dump and dump.length %}
+      <details class="filedump">
+        <summary>View file as JSON</summary>
+        <pre><code>
+        {{ dump | safe }}
+        </code></pre>
+      </details>
+      {% endif %}
+    </footer>
+
+    {# define page-specific "scripts: ['script.js', 'other.js']" in file front matter
+     # or fall back to metalsmith.metadata().scripts if available #}
+    {%- if scripts -%}
+    {% for script in scripts %}
+    {%- if fullUrl.test(script) -%}
+      <script src="{{ script }}"></script>
+    {%- else -%}
+      <script src="{{ baseuri }}/assets/js/{{ script }}?{{ build.pkgVersion }}"></script>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+  </body>
+</html>

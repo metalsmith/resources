@@ -1,0 +1,17 @@
+<nav>
+  <ul class="navitems">
+    {%- for navitem in site.nav -%}
+      {%- if loop.first %}
+        <li class="brand">
+          <a href="{{ baseuri }}/{{ navitem.uri }}" title="{{ navitem.label }}">
+            <img src="{{ baseuri }}/assets/img/brand.png" alt="logo" width="64" height="64"/>
+          </a>
+        </li>
+      {% else %}
+        <li class="{% if navitem.id == id %} active{% endif %}">
+          <a href="{{ baseuri }}/{{ navitem.uri }}">{{ navitem.label }}</a>
+        </li>
+      {% endif -%}
+    {%- endfor -%}
+  </ul>
+</nav>
